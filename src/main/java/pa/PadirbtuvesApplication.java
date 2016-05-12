@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package pa.ui;
+package pa;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -23,10 +23,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 
+import pa.ui.InMemoryMessageRespository;
+import pa.ui.Message;
+import pa.ui.MessageRepository;
+
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan
-public class SampleWebUiApplication {
+public class PadirbtuvesApplication {
 
 	@Bean
 	public MessageRepository messageRepository() {
@@ -44,7 +48,7 @@ public class SampleWebUiApplication {
 	}
 
 	public static void main(String[] args) throws Exception {
-		SpringApplication.run(SampleWebUiApplication.class, args);
+		SpringApplication.run(PadirbtuvesApplication.class, args);
 	}
 
 }

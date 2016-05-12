@@ -11,7 +11,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package pa.ui.mvc;
+package pa.controlers;
 
 import javax.validation.Valid;
 
@@ -32,7 +32,7 @@ import pa.ui.MessageRepository;
  * @author Rob Winch
  */
 @Controller
-@RequestMapping("/")
+@RequestMapping("/con/")
 public class MessageController {
 	private final MessageRepository messageRepository;
 
