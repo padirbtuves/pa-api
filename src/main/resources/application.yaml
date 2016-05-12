@@ -2,6 +2,10 @@ spring:
     thymeleaf:
         # Allow Thymeleaf templates to be reloaded at dev time
         cache: false
+    resources:
+        chain:
+            enabled: true
+        
     
 security:
     oauth2:
