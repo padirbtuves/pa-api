@@ -1,0 +1,22 @@
+spring:
+    thymeleaf:
+        # Allow Thymeleaf templates to be reloaded at dev time
+        cache: false
+    
+security:
+    oauth2:
+        client:
+            clientId: ${GOOGLE_CLIENT_ID}
+            clientSecret: ${GOOGLE_CLIENT_SECRET}
+            accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+            userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+            clientAuthenticationScheme: query
+            scope: profile email
+        resource:
+            userInfoUri: https://www.googleapis.com/plus/v1/people/me
+            preferTokenInfo: false
+
+server:
+    tomcat:
+        access_log_enabled: true
+        tomcat.basedir: target/tomcat

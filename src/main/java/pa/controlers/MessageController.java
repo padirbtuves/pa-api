@@ -32,7 +32,7 @@ import pa.ui.MessageRepository;
  * @author Rob Winch
  */
 @Controller
-@RequestMapping("/con/")
+@RequestMapping("/con")
 public class MessageController {
 	private final MessageRepository messageRepository;
 
