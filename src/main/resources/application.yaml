@@ -5,7 +5,8 @@ spring:
     resources:
         chain:
             enabled: true
-        
+    jpa:
+        show-sql: true
     
 security:
     oauth2:
@@ -19,6 +20,7 @@ security:
         resource:
             userInfoUri: https://www.googleapis.com/plus/v1/people/me
             preferTokenInfo: false
+
 
 server:
     tomcat:

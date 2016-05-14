@@ -1,12 +1,112 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+	ng-app="paApp">
+
 <head>
-<title>Spring Security Example</title>
+<meta charset="utf-8" />
+<title>&#x1F511; rakink</title>
+
+<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.css" />
+<link rel="stylesheet" href="/css/style.css" />
+
+<script type="text/javascript" src="/webjars/angular/angular.js"></script>
+<script type="text/javascript" src="/webjars/angular-ui-utils/ui-utils.js"></script>
+<script type="text/javascript" src="js/ui-bootstrap-tpls-0.9.0.min.js"></script>
+
+<script src="/js/pa.js"></script>
 </head>
-<body>
+
+<body ng-controller="AccessController as ac">
+<form name="f" th:action="@{/login}" method="post">               
+  <fieldset>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+  </fieldset>
+</form>
+
 	<h1>Welcome!</h1>
 	<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" />
+	</form>
+
+
+	<div class="container">
+		<div class="row top-row"></div>
+		<div class="row">
+			<div class="col-lg-2">
+				<img class="logo-small" src="img/logo_small.png" />
+			</div>
+			<div class="col-lg-10">
+				<h1>{{user.email}}</h1>
+				<h2>{{user.google.displayName}}</h2>
+				<label>valid till : </label> {{user.validTill | date:'yyyy-MM-dd'}}
+
+				<div class="form-group form-inline">
+					<label for="nfcId">card number : </label> <input ng-show="editMode"
+						ng-model="user.tagId" type="text" class="form-control" id="nfcId"
+						placeholder="card number" ng-readonly="!editMode"
+						ui-keypress="{13: 'update()', 'esc': 'editMode = false'}" /> <span
+						class="editable-field" ng-show="!editMode"
+						ng-click="editMode = true">{{user.tagId}}</span>
+
+				</div>
+
+				<button type="button" class="btn btn-default"
+					aria-label="Left Align" ng-click="update()">
+					{{editMode ? 'save' : 'edit'}} <span class="glyphicon"
+						ng-class="{true: 'glyphicon-edit', false: 'glyphicon-ok'}[!editMode]"
+						aria-hidden="true"></span>
+				</button>
+				<a href="/logout">
+					<button type="button" class="btn btn-default"
+						aria-label="Left Align">
+						logout <span class="glyphicon glyphicon-log-out"></span>
+					</button>
+				</a>
+			</div>
+		</div>
+
+		<div class="row" ng-show="user.admin">
+			<div class="col-lg-12">
+				<table class="table table-hover">
+					<thead>
+						<th>email</th>
+						<th>name</th>
+						<th>card code</th>
+						<th>admin</th>
+						<th>valid</th>
+						<th></th>
+					</thead>
+					<tbody ng-repeat="user in users">
+						<tr>
+							<td>{{user.email}}</td>
+							<td>{{user.google.displayName}}</td>
+							<td>{{user.tagId}}</td>
+							<td><input type="checkbox" ng-model="user.admin" /></td>
+							<td><input type="text" class="form-control"
+								datepicker-popup='"yyyy-MM-dd"' ng-model="user.validTill"
+								show-button-bar="false" /></td>
+							<td>
+								<button type="button" class="btn btn-default"
+									aria-label="Left Align" ng-click="updateUser(user)">
+									save <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+								</button>
+							</td>
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
 </body>
+
 </html>

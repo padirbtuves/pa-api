@@ -15,16 +15,28 @@ package pa.controlers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import pa.services.UserService;
+
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/")
 public class AppController {
 
+	@Autowired
+	private UserService userService;
+	
 	@RequestMapping
-	public String user(HttpServletRequest request) {
-		return "user/home";
+	public String home(HttpServletRequest request, OAuth2Authentication auth) {
+		System.out.println(userService.getUserAccount());
+		if (request.isUserInRole("ROLE_USER")) {
+			return "redirect:/user";
+		} else {
+			return "home";	
+		}
 	}
 
 }
