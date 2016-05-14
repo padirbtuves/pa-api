@@ -59,7 +59,7 @@ angular.module('paApp', ['ui.utils', 'ui.bootstrap'])
                 $scope.editMode = true;
             }
         };
-
+        
         $scope.keyCallback = function ($event) {
             //$event.preventDefault();
             alert("Asd");

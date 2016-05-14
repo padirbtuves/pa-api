@@ -2,6 +2,8 @@ package pa.config;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-	    http
+	    http.logout().logoutSuccessUrl("/").and()
 	      .antMatcher("/**")
 	      .authorizeRequests()
 	        .antMatchers("/", "/login**", "/webjars/**")
@@ -28,10 +30,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	        .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf().csrfTokenRepository(csrfTokenRepository());
 	}
 
-	private CsrfTokenRepository csrfTokenRepository() {
-		HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
-		repository.setHeaderName("X-XSRF-TOKEN");
-		return repository;
+	@Bean
+	@ConfigurationProperties("security.csrf.tokenRepository")
+	protected CsrfTokenRepository csrfTokenRepository() {
+		return new HttpSessionCsrfTokenRepository();
 	}
 	
 	@Override

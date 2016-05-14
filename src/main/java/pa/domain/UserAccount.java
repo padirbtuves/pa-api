@@ -27,6 +27,8 @@ public class UserAccount extends AbstractPersistable<Long> {
 
 	@Column(unique = true, nullable = true)
 	private String phone;
+	
+	private String displayName;
 
 	private boolean admin = false;
 
@@ -80,4 +82,13 @@ public class UserAccount extends AbstractPersistable<Long> {
 		this.validTill = validTill;
 	}
 
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+
+	
 }

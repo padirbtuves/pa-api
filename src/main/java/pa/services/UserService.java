@@ -82,10 +82,13 @@ public class UserService {
 	private UserAccount makeGoogleUserAccount(OAuth2Authentication authentication) {
 		UserAccount result = new UserAccount();
 		OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) authentication.getDetails();
+		Userinfoplus userInfo = getUserInfo(details.getTokenValue());
+		
 		
 		result.setGoogleId((String) authentication.getPrincipal());
 		result.setAdmin(false);
-		result.setEmail(getUserEmail(details.getTokenValue()));
+		result.setEmail(userInfo.getEmail());
+		result.setDisplayName(userInfo.getName());
 		result.setPhone(null);
 		result.setTagId(null);
 		result.setValidTill(null);
@@ -94,16 +97,14 @@ public class UserService {
 
 	}
 	
-	private String getUserEmail(String token) {
-		String result = null;
+	private Userinfoplus getUserInfo(String token) {
+		Userinfoplus result = null;
 
 		GoogleCredential credential = new GoogleCredential().setAccessToken(token);
 		Oauth2 oauth2 = new Oauth2.Builder(new NetHttpTransport(), new JacksonFactory(), credential)
 				.setApplicationName("Oauth2").build();
 		try {
-			Userinfoplus userInfo = oauth2.userinfo().get().execute();
-
-			result = userInfo.getEmail();
+			result = oauth2.userinfo().get().execute();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
