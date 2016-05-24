@@ -1,4 +1,8 @@
 spring:
+    datasource:
+        url: jdbc:postgresql://${OPENSHIFT_POSTGRESQL_DB_HOST}:${OPENSHIFT_POSTGRESQL_DB_PORT}/padirbtuves
+        username: ${OPENSHIFT_POSTGRESQL_DB_USERNAME}
+        password: ${OPENSHIFT_POSTGRESQL_DB_PASSWORD}
     thymeleaf:
         # Allow Thymeleaf templates to be reloaded at dev time
         cache: false
@@ -7,6 +11,10 @@ spring:
             enabled: true
     jpa:
         show-sql: true
+        hibernate:
+            ddl-auto: validate
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+            
     
 security:
     csrf:
