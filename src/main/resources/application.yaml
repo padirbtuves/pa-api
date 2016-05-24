@@ -15,6 +15,7 @@ spring:
             ddl-auto: validate
         database-platform: org.hibernate.dialect.PostgreSQLDialect
             
+            
     
 security:
     csrf:
