@@ -48,6 +48,7 @@ public class UserService {
 				result = makeGoogleUserAccount(oa);
 				accountRepository.save(result);
 			}
+			// update user info from latest data
 		}
 		
 		return result;
@@ -62,13 +63,8 @@ public class UserService {
 		}
 	}
 	
-	public Date getValidTill(String tagId) {
-		UserAccount userAccount = accountRepository.findOneByTagId(tagId);
-		if (userAccount == null) {
-			return null;
-		} else {
-			return userAccount.getValidTill();
-		}
+	public UserAccount getUserAccount(String tagId) {
+		return accountRepository.findOneByTagId(tagId);
 	}
 	
 	public List<UserAccount> getAll() {

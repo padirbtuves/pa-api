@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import pa.domain.AccessLog;
 import pa.domain.UserAccount;
 import pa.rest.data.AuthenticateTagResult;
+import pa.services.AccessLogService;
 import pa.services.UserService;
 
 @RestController
@@ -20,13 +22,16 @@ public class PaController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private AccessLogService logService;
+	
 	@RequestMapping(value="/app/user/all")
 	public List<UserAccount> listAll() {
 		return userService.getAll();
 	}
 
 	@RequestMapping("/app/user/current")
-	public UserAccount getCurrentUSer() {
+	public UserAccount getCurrentUser() {
 		return userService.getUserAccount();
 	}
 
@@ -37,12 +42,21 @@ public class PaController {
 
 	@RequestMapping("/auth/nfc")
 	public AuthenticateTagResult authentcateTag(@RequestParam(name="id") String tagId) {
-		Date validTill = userService.getValidTill(tagId);
+		UserAccount userAccount = userService.getUserAccount(tagId);
+		
+		Date validTill = null;
+		if (userAccount != null) {
+			validTill = userAccount.getValidTill();
+		} 
 		
 		AuthenticateTagResult result = new AuthenticateTagResult();
 		result.setId(tagId);
 		result.setValid(validTill != null && validTill.after(new Date()));
 		result.setValidTill(validTill);
+		
+		if (result.isValid()) {
+			logService.createAccessLog(new AccessLog(userAccount));
+		}
 		
 		return result;
 	}
