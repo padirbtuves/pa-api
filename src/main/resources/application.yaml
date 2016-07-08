@@ -12,10 +12,8 @@ spring:
     jpa:
         show-sql: true
         hibernate:
-            ddl-auto: update
-        database-platform: org.hibernate.dialect.PostgreSQLDialect
-            
-            
+            ddl-auto: validate #update
+        database-platform: org.hibernate.dialect.PostgreSQLDialect   
     
 security:
     csrf:
