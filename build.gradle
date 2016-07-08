@@ -1,15 +1,12 @@
 buildscript {
 	ext {
-		springBootVersion = '1.0.0.BUILD-SNAPSHOT'
+		springBootVersion = '1.3.5.RELEASE'
 		springLoadedVersion = '1.1.5.RELEASE'
 	}
 	repositories {
-		// NOTE: You should declare only repositories that you need here
-		mavenLocal()
 		mavenCentral()
 		maven { url "http://repo.spring.io/release" }
-		maven { url "http://repo.spring.io/milestone" }
-		maven { url "http://repo.spring.io/snapshot" }
+
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -25,7 +22,9 @@ apply plugin: 'spring-boot'
 apply plugin: 'groovy'
 
 
-mainClassName = "sample.ui.SampleWebUiApplication"
+bootRepackage {
+	mainClass = "sample.ui.SampleWebUiApplication"
+}
 
 jar {
 	baseName = 'spring-boot-sample-web-ui'
@@ -33,18 +32,30 @@ jar {
 }
 
 repositories {
-	// NOTE: You should declare only repositories that you need here
-	mavenLocal()
 	mavenCentral()
 	maven { url "http://repo.spring.io/release" }
-	maven { url "http://repo.spring.io/milestone" }
-	maven { url "http://repo.spring.io/snapshot" }
+	
 }
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-	compile("org.codehaus.groovy:groovy-all:2.4.7")
+	compile("org.springframework.boot:spring-boot-starter-data-jpa")
+	compile("org.springframework.boot:spring-boot-starter-security")
+	compile("org.springframework.boot:spring-boot-devtools")
+	compile("org.springframework.security.oauth:spring-security-oauth2")
+	
 	compile("org.hibernate:hibernate-validator")
+	compile "postgresql:postgresql:9.1-901.jdbc4"
+
+	compile("org.webjars:bootstrap:3.2.0")
+	compile "org.webjars.bower:angular:1.3.15"
+	compile "org.webjars.bower:angular-ui-utils:0.2.3"
+	compile "org.webjars:webjars-locator"
+
+	compile "com.google.apis:google-api-services-oauth2:v2-rev95-1.20.0"
+	
+	testCompile "org.springframework.boot:spring-boot-starter-test"
+	testCompile "org.hsqldb:hsqldb"
 	testCompile("org.springframework.boot:spring-boot-starter-test")
 }
 
