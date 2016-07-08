@@ -39,6 +39,12 @@ public class PaController {
 	public UserAccount updateUser(@RequestBody UserAccount userAccount) {
 		return userService.save(userAccount);
 	}
+	
+	@RequestMapping("/auth/log")
+	public List<AccessLog> accessLog() {
+		return logService.getLastAccessLog();
+	}
+
 
 	@RequestMapping("/auth/nfc")
 	public AuthenticateTagResult authentcateTag(@RequestParam(name="id") String tagId) {

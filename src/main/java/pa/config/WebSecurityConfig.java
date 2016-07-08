@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	    http.logout().logoutSuccessUrl("/").and()
 	      .antMatcher("/**")
 	      .authorizeRequests()
-	        .antMatchers("/", "/login**", "/webjars/**", "/auth/nfc")
+	        .antMatchers("/", "/login**", "/webjars/**", "/auth/nfc", "/auth/log")
 	        .permitAll()
 	      .anyRequest()
 	        .authenticated().and()

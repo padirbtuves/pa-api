@@ -38,3 +38,6 @@ server:
     tomcat:
         access_log_enabled: true
         tomcat.basedir: target/tomcat
+        
+logging:
+    file: ${OPENSHIFT_LOG_DIR}/spring.log

@@ -3,6 +3,8 @@
  */
 package pa.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +23,9 @@ public class AccessLogService {
 	
 	public void createAccessLog(AccessLog accessLog) {
 		accessLogRepository.save(accessLog);
+	}
+	
+	public List<AccessLog> getLastAccessLog() {
+		return accessLogRepository.findFirst10ByOrderByDateTimeDesc();
 	}
 }

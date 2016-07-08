@@ -31,7 +31,6 @@ public class AppController {
 	
 	@RequestMapping
 	public String home(HttpServletRequest request, OAuth2Authentication auth) {
-		System.out.println(userService.getUserAccount());
 		if (request.isUserInRole("ROLE_USER")) {
 			return "redirect:/user";
 		} else {

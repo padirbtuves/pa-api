@@ -89,6 +89,11 @@
 			<artifactId>google-api-services-oauth2</artifactId>
 			<version>v2-rev95-1.20.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.groovy</groupId>
+			<artifactId>groovy-all</artifactId>
+			<version>2.4.7</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

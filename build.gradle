@@ -22,6 +22,8 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'groovy'
+
 
 mainClassName = "sample.ui.SampleWebUiApplication"
 
@@ -41,6 +43,7 @@ repositories {
 
 dependencies {
 	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+	compile("org.codehaus.groovy:groovy-all:2.4.7")
 	compile("org.hibernate:hibernate-validator")
 	testCompile("org.springframework.boot:spring-boot-starter-test")
 }
