@@ -89,6 +89,10 @@ public class UserAccount extends AbstractPersistable<Long> {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	
+	public boolean isValid() {
+		return validTill != null && validTill.after(new Date());
+	}
 
 	
 }

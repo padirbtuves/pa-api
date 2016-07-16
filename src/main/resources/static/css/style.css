@@ -29,3 +29,7 @@
 .login-bar:hover {
     background-image: url('/img/White-signin_Medium_hover_32dp.png');
 }
+
+#chart_div {
+	height: 400px;
+}

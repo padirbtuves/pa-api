@@ -13,20 +13,39 @@
 
 package pa.controlers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import pa.domain.AccessLogCount;
+import pa.services.AccessLogService;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
+	
+	@Autowired
+	private AccessLogService logService;
 
 	@RequestMapping
 	public String user(HttpServletRequest request) {
 		return "user/home";
+	}
+
+	@RequestMapping(path = "list")
+	public String list(HttpServletRequest request) {
+		return "user/list";
+	}
+
+	@RequestMapping(path="log")
+	public String log(HttpServletRequest request) {
+		
+		return "user/log";
 	}
 
 }

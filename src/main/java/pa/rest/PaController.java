@@ -3,6 +3,8 @@ package pa.rest;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pa.domain.AccessLog;
+import pa.domain.AccessLogCount;
 import pa.domain.UserAccount;
 import pa.rest.data.AuthenticateTagResult;
+import pa.rest.data.Event;
 import pa.services.AccessLogService;
 import pa.services.UserService;
 
@@ -44,7 +48,12 @@ public class PaController {
 	public List<AccessLog> accessLog() {
 		return logService.getLastAccessLog();
 	}
-
+	
+	@RequestMapping("/auth/logs")
+	public List<AccessLogCount> logCount() {
+		DateTime till = DateTime.now().withDayOfWeek(DateTimeConstants.SUNDAY);
+		return logService.getLogs(till.minusWeeks(4).toDate(), till.toDate());
+	}
 
 	@RequestMapping("/auth/nfc")
 	public AuthenticateTagResult authentcateTag(@RequestParam(name="id") String tagId) {
@@ -65,6 +74,11 @@ public class PaController {
 		}
 		
 		return result;
+	}
+	
+	@RequestMapping(value="/event/log", method=RequestMethod.POST)
+	public void logEvent(@RequestBody Event event) {
+		
 	}
 
 }

@@ -12,7 +12,7 @@ spring:
     jpa:
         show-sql: true
         hibernate:
-            ddl-auto: validate #update
+            ddl-auto: update
         database-platform: org.hibernate.dialect.PostgreSQLDialect   
     
 security:
