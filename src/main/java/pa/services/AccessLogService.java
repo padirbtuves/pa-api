@@ -35,7 +35,7 @@ public class AccessLogService {
 	public List<AccessLogCount> getLogs(Date from, Date till) {
 		List<AccessLogCount> result = new ArrayList<AccessLogCount>();
 		for (Object[] data : accessLogRepository.findDailyLog(from, till)) {
-			result.add(new AccessLogCount((Date) data[0], (int) data[1]));
+			result.add(new AccessLogCount((Date) data[0], (Integer) data[1]));
 		}
 
 		return result;
