@@ -1,9 +1,12 @@
-package pa.domain;
+package pa.rest.data;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class AccessLogCount {
 
+	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private Date dateTime;
 
 	private int count;

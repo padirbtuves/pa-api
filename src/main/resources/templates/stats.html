@@ -22,7 +22,24 @@
 <body ng-controller="LogsController as lc">
 	<script type="text/javascript"
 		src="https://www.gstatic.com/charts/loader.js"></script>
-	<div id="chart_div" ></div>
+
+	<div class="container">
+		<div class="row top-row"></div>
+		<div class="row">
+			<div class="col-lg-12">
+				<h1>Apsilankymai paskutinį mėnesį</h1>
+				<div class="log_chart" id="dailyLog"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-12">
+				<h1>Apsilankymai paskutinę savaitę</h1>
+				<div class="log_chart" id="hourlyLog"></div>
+			</div>
+		</div>
+	</div>
+
+
 
 </body>
 </html>

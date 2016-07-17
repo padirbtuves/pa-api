@@ -37,5 +37,11 @@ public class AppController {
 			return "home";	
 		}
 	}
+	
+	@RequestMapping(path="stats")
+	public String log(HttpServletRequest request) {
+		
+		return "stats";
+	}
 
 }

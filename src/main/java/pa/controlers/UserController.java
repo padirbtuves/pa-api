@@ -22,7 +22,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import pa.domain.AccessLogCount;
+import pa.rest.data.AccessLogCount;
 import pa.services.AccessLogService;
 
 @Controller
@@ -40,12 +40,6 @@ public class UserController {
 	@RequestMapping(path = "list")
 	public String list(HttpServletRequest request) {
 		return "user/list";
-	}
-
-	@RequestMapping(path="log")
-	public String log(HttpServletRequest request) {
-		
-		return "user/log";
 	}
 
 }

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pa.domain.AccessLog;
-import pa.domain.AccessLogCount;
 import pa.domain.UserAccount;
+import pa.rest.data.AccessLogCount;
 import pa.rest.data.AuthenticateTagResult;
 import pa.rest.data.Event;
 import pa.services.AccessLogService;
@@ -49,10 +49,16 @@ public class PaController {
 		return logService.getLastAccessLog();
 	}
 	
-	@RequestMapping("/auth/logs")
-	public List<AccessLogCount> logCount() {
+	@RequestMapping("/stats/hourlyLogs")
+	public List<AccessLogCount> getHourlyLogs() {
+		DateTime till = DateTime.now();//.withDayOfWeek(DateTimeConstants.SUNDAY);
+		return logService.getHourlyLogs(till.minusWeeks(1).toDate(), till.toDate());
+	}
+
+	@RequestMapping("/stats/dailyLogs")
+	public List<AccessLogCount> getDailyLogs() {
 		DateTime till = DateTime.now().withDayOfWeek(DateTimeConstants.SUNDAY);
-		return logService.getLogs(till.minusWeeks(4).toDate(), till.toDate());
+		return logService.getDailyLogs(till.minusWeeks(4).toDate(), till.toDate());
 	}
 
 	@RequestMapping("/auth/nfc")

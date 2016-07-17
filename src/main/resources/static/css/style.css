@@ -30,6 +30,6 @@
     background-image: url('/img/White-signin_Medium_hover_32dp.png');
 }
 
-#chart_div {
+.log_chart {
 	height: 400px;
 }
