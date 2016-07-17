@@ -121,12 +121,9 @@ angular
                 
                 function loadHourlyLog() {
                     AccessService.getHourlyLogs(function (data) {
-                        var dataArray = [['Date', 'Visits', {
-                            role: 'style'
-         }]];
+                        var dataArray = [['Date', 'Visits', { role: 'style' }]];
                         for (var i = 0; i < data.length; i++) {
-                            dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count),
-            'blue'])
+                            dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count), 'black'])
                         }
 
                         var data = google.visualization
@@ -166,12 +163,9 @@ angular
                 
                 function loadDailyLog() {
                     AccessService.getDailyLogs(function (data) {
-                        var dataArray = [['Date', 'Visits', {
-                            role: 'style'
-         }]];
+                        var dataArray = [['Date', 'Visits', { role: 'style' }]];
                         for (var i = 0; i < data.length; i++) {
-                            dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count),
-            'blue'])
+                            dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count), 'stroke-color: black; stroke-width: 4; fill-color: white'])
                         }
 
                         var data = google.visualization
