@@ -20,10 +20,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-	    http.logout().logoutSuccessUrl("/").and()
+	    http
+	      .logout().logoutSuccessUrl("/").and()
 	      .antMatcher("/**")
 	      .authorizeRequests()
-	        .antMatchers("/", "/login**", "/webjars/**", "/auth/nfc", "/auth/log", "/auth/logs", "/stats/**")
+	        .antMatchers("/", "/up", "/login**", "/webjars/**", "/auth/nfc", "/auth/log", "/auth/logs", "/stats/**")
 	        .permitAll()
 	      .anyRequest()
 	        .authenticated().and()

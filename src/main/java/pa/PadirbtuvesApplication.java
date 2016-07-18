@@ -16,6 +16,10 @@
 
 package pa;
 
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+
+import org.eclipse.persistence.jaxb.JAXBContext;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -23,6 +27,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 
+import pa.domain.statement.StatementDocument;
 import pa.ui.InMemoryMessageRespository;
 import pa.ui.Message;
 import pa.ui.MessageRepository;
@@ -45,6 +50,12 @@ public class PadirbtuvesApplication {
 				return messageRepository().findMessage(Long.valueOf(id));
 			}
 		};
+	}
+
+	@Bean
+	public Unmarshaller paymentUnmarshaller() throws JAXBException {
+		javax.xml.bind.JAXBContext jaxbContext = JAXBContext.newInstance(StatementDocument.class);
+		return jaxbContext.createUnmarshaller();
 	}
 
 	public static void main(String[] args) throws Exception {
