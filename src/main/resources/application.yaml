@@ -1,8 +1,6 @@
 spring:
     datasource:
-        url: jdbc:postgresql://${OPENSHIFT_POSTGRESQL_DB_HOST}:${OPENSHIFT_POSTGRESQL_DB_PORT}/padirbtuves
-        username: ${OPENSHIFT_POSTGRESQL_DB_USERNAME}
-        password: ${OPENSHIFT_POSTGRESQL_DB_PASSWORD}
+        platform: hsqldb
     thymeleaf:
         # Allow Thymeleaf templates to be reloaded at dev time
         cache: false
@@ -12,8 +10,7 @@ spring:
     jpa:
         show-sql: true
         hibernate:
-            ddl-auto: update
-        database-platform: org.hibernate.dialect.PostgreSQLDialect   
+            ddl-auto: create
     
 security:
     csrf:
@@ -31,11 +28,23 @@ security:
             userInfoUri: https://www.googleapis.com/plus/v1/people/me
             preferTokenInfo: false
 
-
 server:
     tomcat:
         access_log_enabled: true
         tomcat.basedir: target/tomcat
-        
+
+---
+
+spring:
+    profiles: prod
+    datasource:
+        url: jdbc:postgresql://${OPENSHIFT_POSTGRESQL_DB_HOST}:${OPENSHIFT_POSTGRESQL_DB_PORT}/padirbtuves
+        username: ${OPENSHIFT_POSTGRESQL_DB_USERNAME}
+        password: ${OPENSHIFT_POSTGRESQL_DB_PASSWORD}
+        initialize: false
+    jpa:
+        hibernate:
+            ddl-auto: update
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
 logging:
     file: ${OPENSHIFT_LOG_DIR}/spring.log
