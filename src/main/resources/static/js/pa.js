@@ -123,7 +123,7 @@ angular
                     AccessService.getHourlyLogs(function (data) {
                         var dataArray = [['Date', 'Visits', { role: 'style' }]];
                         for (var i = 0; i < data.length; i++) {
-                            dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count), 'blackR'])
+                            dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count), 'black'])
                         }
 
                         var data = google.visualization
