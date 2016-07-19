@@ -4,6 +4,7 @@
 package pa.services;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.transaction.Transactional;
 
@@ -19,6 +20,8 @@ import pa.repositories.PaymentRepository;
  */
 @Service
 public class AdminService {
+	
+	private static final Logger LOG = Logger.getLogger(AdminService.class.getName());
 
 	@Autowired
 	private PaymentRepository paymentRepository;
@@ -28,12 +31,13 @@ public class AdminService {
 		int count = 0;
 		
 		for (Payment payment : payments) {
+			LOG.info("Payment : " + payment.getTransactionId());
 			if (paymentRepository.findOneByTransactionId(payment.getTransactionId()) == null) {
 				paymentRepository.save(payment);
 				count ++;
 			}
 		}
 		
-		System.out.println("Imported payments : " + count);
+		LOG.info("Imported payments : " + count);
 	}
 }

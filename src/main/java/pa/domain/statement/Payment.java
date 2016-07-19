@@ -35,7 +35,7 @@ public class Payment extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 8312764342778073073L;
 
-	@XmlPath("NtryDtls/TxDtls/Refs/TxId/text()")
+	@XmlPath("s:NtryDtls/s:TxDtls/s:Refs/s:TxId/text()")
 	@Column(unique = true)
 	private Integer transactionId;
 	
@@ -45,22 +45,22 @@ public class Payment extends AbstractPersistable<Long> {
 	@XmlElement(name="Amt")
 	private Double amount;
 		
-	@XmlPath("NtryDtls/TxDtls/RltdPties/DbtrAcct/Id/IBAN/text()")
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:DbtrAcct/s:Id/s:IBAN/text()")
 	private String debitAccount;
 	
-	@XmlPath("NtryDtls/TxDtls/RltdPties/CdtrAcct/Id/IBAN/text()")
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:CdtrAcct/s:Id/s:IBAN/text()")
 	private String creditAccount;
 	
-	@XmlPath("NtryDtls/TxDtls/RltdPties/Dbtr/Nm/text()")
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:Dbtr/s:Nm/text()")
 	private String debitor;
 	
-	@XmlPath("NtryDtls/TxDtls/RltdPties/Cdtr/Nm/text()")
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:Cdtr/s:Nm/text()")
 	private String creditor;
 	
-	@XmlPath("NtryDtls/TxDtls/RmtInf/Ustrd/text()")
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RmtInf/s:Ustrd/text()")
 	private String description;
 	
-	@XmlPath("BookgDt/Dt/text()")
+	@XmlPath("s:BookgDt/s:Dt/text()")
 	@XmlJavaTypeAdapter(DateAdapter.class)
 	private Date date;
 

@@ -34,7 +34,6 @@ public class AppController {
 
 	@RequestMapping(path = "stats")
 	public String log(HttpServletRequest request) {
-
 		return "stats";
 	}
 
