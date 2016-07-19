@@ -3,6 +3,7 @@ package pa.domain.statement;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,8 +17,31 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Payment extends AbstractPersistable<Long> {
 
+	public Integer getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(Integer transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
 	private static final long serialVersionUID = 8312764342778073073L;
 
+	@XmlPath("NtryDtls/TxDtls/Refs/TxId/text()")
+	@Column(unique = true)
+	private Integer transactionId;
+	
+	@XmlElement(name="CdtDbtInd")
+	private String direction;
+	
 	@XmlElement(name="Amt")
 	private Double amount;
 		
