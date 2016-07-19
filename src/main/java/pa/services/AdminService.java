@@ -3,6 +3,7 @@
  */
 package pa.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import pa.domain.statement.Payment;
 import pa.repositories.PaymentRepository;
+import pa.rest.data.AccessLogCount;
 
 /**
  * @author vincentas
@@ -39,5 +41,9 @@ public class AdminService {
 		}
 		
 		LOG.info("Imported payments : " + count);
+	}
+
+	public List<Payment> getPayments(Date from, Date till) {
+		return paymentRepository.findByDateBetweenOrderByDate(from, till);
 	}
 }

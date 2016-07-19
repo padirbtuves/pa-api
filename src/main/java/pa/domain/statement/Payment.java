@@ -13,8 +13,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties({ "id", "new" })
 public class Payment extends AbstractPersistable<Long> {
 
 	public Integer getTransactionId() {
@@ -37,31 +42,37 @@ public class Payment extends AbstractPersistable<Long> {
 
 	@XmlPath("s:NtryDtls/s:TxDtls/s:Refs/s:TxId/text()")
 	@Column(unique = true)
+	@JsonIgnore
 	private Integer transactionId;
-	
-	@XmlElement(name="CdtDbtInd")
+
+	@XmlElement(name = "CdtDbtInd")
 	private String direction;
-	
-	@XmlElement(name="Amt")
+
+	@XmlElement(name = "Amt")
 	private Double amount;
-		
+
 	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:DbtrAcct/s:Id/s:IBAN/text()")
+	@JsonIgnore
 	private String debitAccount;
-	
+
 	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:CdtrAcct/s:Id/s:IBAN/text()")
+	@JsonIgnore
 	private String creditAccount;
-	
+
 	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:Dbtr/s:Nm/text()")
+	@JsonIgnore
 	private String debitor;
-	
+
 	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:Cdtr/s:Nm/text()")
+	@JsonIgnore
 	private String creditor;
-	
+
 	@XmlPath("s:NtryDtls/s:TxDtls/s:RmtInf/s:Ustrd/text()")
 	private String description;
-	
+
 	@XmlPath("s:BookgDt/s:Dt/text()")
 	@XmlJavaTypeAdapter(DateAdapter.class)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private Date date;
 
 	public Double getAmount() {
@@ -119,6 +130,5 @@ public class Payment extends AbstractPersistable<Long> {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
+
 }
