@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import pa.domain.AccessLog;
 import pa.domain.UserAccount;
-import pa.domain.statement.Payment;
 import pa.rest.data.AccessLogCount;
 import pa.rest.data.AuthenticateTagResult;
 import pa.rest.data.Event;
+import pa.rest.data.Finances;
 import pa.services.AccessLogService;
 import pa.services.AdminService;
 import pa.services.UserService;
@@ -56,20 +55,24 @@ public class PaController {
 
 	@RequestMapping("/stats/hourlyLogs")
 	public List<AccessLogCount> getHourlyLogs() {
-		DateTime till = DateTime.now();// .withDayOfWeek(DateTimeConstants.SUNDAY);
+		DateTime till = DateTime.now();
 		return logService.getHourlyLogs(till.minusWeeks(1).toDate(), till.toDate());
 	}
 
 	@RequestMapping("/stats/dailyLogs")
 	public List<AccessLogCount> getDailyLogs() {
-		DateTime till = DateTime.now().withDayOfWeek(DateTimeConstants.SUNDAY);
+		DateTime till = DateTime.now();
 		return logService.getDailyLogs(till.minusWeeks(4).toDate(), till.toDate());
 	}
 
 	@RequestMapping("/stats/finances")
-	public List<Payment> getFinances() {
-		DateTime till = DateTime.now().withDayOfWeek(DateTimeConstants.SUNDAY);
-		return adminService.getPayments(till.minusMonths(6).toDate(), till.toDate());
+	public Finances getFinances() {
+		Finances result = new Finances();
+		DateTime till = DateTime.now();
+		result.setPayments(adminService.getPayments(till.minusMonths(6).toDate(), till.toDate()));
+		result.setInitialAmount(adminService.getAmountOn(till.minusMonths(6).toDate()));
+		
+		return result;
 	}
 
 	@RequestMapping("/auth/nfc")

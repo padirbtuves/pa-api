@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import pa.domain.statement.Payment;
 import pa.repositories.PaymentRepository;
-import pa.rest.data.AccessLogCount;
 
 /**
  * @author vincentas
@@ -45,5 +44,9 @@ public class AdminService {
 
 	public List<Payment> getPayments(Date from, Date till) {
 		return paymentRepository.findByDateBetweenOrderByDate(from, till);
+	}
+
+	public Double getAmountOn(Date date) {
+		return paymentRepository.getCreditTill(date) - paymentRepository.getDebitTill(date);
 	}
 }

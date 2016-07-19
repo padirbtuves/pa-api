@@ -216,8 +216,9 @@ angular
                 }
 
                 function loadFinanceLog() {
-                    AccessService.getFinanceLogs(function (data) {
-                    	var total = 0;
+                    AccessService.getFinanceLogs(function (finances) {
+                    	data = finances.payments;
+                    	var total = finances.initialAmount;
                         var dataArray = [['Date', 'Transaction', 'Total']];
                         for (var i = 0; i < data.length; i++) {
                         	var amount = parseFloat(data[i].amount);
@@ -246,7 +247,7 @@ angular
                                     count: 6,
                                 },
                                 minorGridlines: {
-                                    count: 4,
+                                    count: 3,
                                     color: '#f5f5f5' 
 
                                 },
