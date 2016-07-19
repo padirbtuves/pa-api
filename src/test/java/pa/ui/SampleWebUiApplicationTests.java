@@ -59,23 +59,21 @@ public class SampleWebUiApplicationTests {
 				"http://localhost:" + this.port, String.class);
 		assertEquals(HttpStatus.OK, entity.getStatusCode());
 		assertTrue("Wrong body (title doesn't match):\n" + entity.getBody(), entity
-				.getBody().contains("<title>Messages"));
+				.getBody().contains("<title>&#x1F511; rakink</title>"));
 		assertFalse("Wrong body (found layout:fragment):\n" + entity.getBody(), entity
 				.getBody().contains("layout:fragment"));
 	}
 
-//	@Test
-//	public void testCreate() throws Exception {
-//		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-//		map.set("text", "FOO text");
-//		map.set("summary", "FOO");
-//		URI location = new TestRestTemplate().postForLocation("http://localhost:"
-//				+ this.port + "/con", map);
-//		assertTrue("Wrong location:\n" + location,
-//				location.toString().contains("localhost:" + this.port));
-//	}
+	public void testCreate() throws Exception {
+		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+		map.set("text", "FOO text");
+		map.set("summary", "FOO");
+		URI location = new TestRestTemplate().postForLocation("http://localhost:"
+				+ this.port + "/con", map);
+		assertTrue("Wrong location:\n" + location,
+				location.toString().contains("localhost:" + this.port));
+	}
 
-	@Test
 	public void testCss() throws Exception {
 		ResponseEntity<String> entity = new TestRestTemplate().getForEntity(
 				"http://localhost:" + this.port + "/css/bootstrap.min.css", String.class);

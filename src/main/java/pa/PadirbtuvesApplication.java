@@ -16,6 +16,8 @@
 
 package pa;
 
+import java.util.logging.Logger;
+
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
@@ -36,6 +38,8 @@ import pa.ui.MessageRepository;
 @EnableAutoConfiguration
 @ComponentScan
 public class PadirbtuvesApplication {
+	
+	private static final Logger LOG = Logger.getLogger(PadirbtuvesApplication.class.getName());
 
 	@Bean
 	public MessageRepository messageRepository() {
@@ -55,6 +59,7 @@ public class PadirbtuvesApplication {
 	@Bean
 	public Unmarshaller paymentUnmarshaller() throws JAXBException {
 		javax.xml.bind.JAXBContext jaxbContext = JAXBContext.newInstance(StatementDocument.class);
+		LOG.info("JAXBContext created " + jaxbContext);
 		return jaxbContext.createUnmarshaller();
 	}
 
