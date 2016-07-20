@@ -12,7 +12,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import pa.domain.EventLog;
 import pa.domain.statement.Payment;
+import pa.repositories.EventLogRepository;
 import pa.repositories.PaymentRepository;
 
 /**
@@ -26,6 +28,9 @@ public class AdminService {
 
 	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	@Autowired
+	private EventLogRepository eventRepository;
 
 	@Transactional
 	public void storePaymentData(List<Payment> payments) {
@@ -48,5 +53,9 @@ public class AdminService {
 
 	public Double getAmountOn(Date date) {
 		return paymentRepository.getCreditTill(date) - paymentRepository.getDebitTill(date);
+	}
+	
+	public void logEvent(String eventName) {
+		eventRepository.save(new EventLog(eventName));
 	}
 }

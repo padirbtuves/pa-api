@@ -15,12 +15,10 @@ package pa.controlers;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,11 +26,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import pa.domain.statement.Payment;
 import pa.domain.statement.Statement;
 import pa.domain.statement.StatementDocument;
 import pa.services.AdminService;
-import pa.services.UserService;
 
 @Controller
 @RequestMapping("/admin")
@@ -66,5 +62,4 @@ public class AdminController {
 
 		return "redirect:/admin";
 	}
-
 }

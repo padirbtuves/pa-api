@@ -1,5 +1,6 @@
 package pa.rest;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import pa.domain.AccessLog;
 import pa.domain.UserAccount;
 import pa.rest.data.AccessLogCount;
 import pa.rest.data.AuthenticateTagResult;
-import pa.rest.data.Event;
 import pa.rest.data.Finances;
 import pa.services.AccessLogService;
 import pa.services.AdminService;
@@ -29,7 +29,7 @@ public class PaController {
 
 	@Autowired
 	private AccessLogService logService;
-	
+
 	@Autowired
 	private AdminService adminService;
 
@@ -71,7 +71,7 @@ public class PaController {
 		DateTime till = DateTime.now();
 		result.setPayments(adminService.getPayments(till.minusMonths(6).toDate(), till.toDate()));
 		result.setInitialAmount(adminService.getAmountOn(till.minusMonths(6).toDate()));
-		
+
 		return result;
 	}
 
@@ -96,9 +96,12 @@ public class PaController {
 		return result;
 	}
 
-	@RequestMapping(value = "/event/log", method = RequestMethod.POST)
-	public void logEvent(@RequestBody Event event) {
+	@RequestMapping("/event")
+	public List<String> logEvent(String clientId, String eventName) {
+		System.out.println(clientId + " " + eventName);
+		// TODO check client id
+		adminService.logEvent(eventName);
 
+		return new ArrayList<>();
 	}
-
 }
