@@ -60,8 +60,7 @@ public class PaController {
 		DateTime from = till.minusWeeks(4);
 		
 		EventLogResult result = new EventLogResult();
-		//result.setEvents(logService.getEventCount(from.toDate(), till.toDate(), "door 0", AccessLogService.LOG_INTERVAL.HOUR));
-		result.setEvents(new ArrayList<AccessLogCount>());
+		result.setEvents(logService.getEventCount(from.toDate(), till.toDate(), "door 0", AccessLogService.LOG_INTERVAL.HOUR));
 		result.setFrom(from.toDate());
 		result.setTill(till.toDate());
 		result.setEventName("door 0");
