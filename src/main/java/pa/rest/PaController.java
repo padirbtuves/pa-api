@@ -57,7 +57,7 @@ public class PaController {
 	@RequestMapping("/stats/hourlyLogs")
 	public EventLogResult getHourlyLogs() {
 		DateTime till = DateTime.now();
-		DateTime from = till.minusWeeks(4);
+		DateTime from = till.minusWeeks(1);
 		
 		EventLogResult result = new EventLogResult();
 		result.setEvents(logService.getEventCount(from.toDate(), till.toDate(), "door 0", AccessLogService.LOG_INTERVAL.HOUR));
