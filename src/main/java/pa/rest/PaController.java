@@ -56,7 +56,8 @@ public class PaController {
 	@RequestMapping("/stats/hourlyLogs")
 	public List<AccessLogCount> getHourlyLogs() {
 		DateTime till = DateTime.now();
-		return logService.getHourlyLogs(till.minusWeeks(1).toDate(), till.toDate());
+		return logService.getEventCount(till.minusWeeks(1).toDate(), till.toDate(), "door 0", AccessLogService.LOG_INTERVAL.HOUR);
+		//return logService.getHourlyLogs(till.minusWeeks(1).toDate(), till.toDate());
 	}
 
 	@RequestMapping("/stats/dailyLogs")

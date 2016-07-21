@@ -133,7 +133,7 @@ angular
                 
                 function loadHourlyLog() {
                     AccessService.getHourlyLogs(function (data) {
-                        var dataArray = [['Date', 'Visits', { role: 'style' }]];
+                        var dataArray = [['Date', 'Doors opened', { role: 'style' }]];
                         for (var i = 0; i < data.length; i++) {
                             dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count), 'black'])
                         }
