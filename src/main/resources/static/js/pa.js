@@ -132,8 +132,9 @@ angular
                 }
                 
                 function loadHourlyLog() {
-                    AccessService.getHourlyLogs(function (data) {
-                        var dataArray = [['Date', 'Doors opened', { role: 'style' }]];
+                    AccessService.getHourlyLogs(function (response) {
+                    	var data = response.events
+                        var dataArray = [['Date', 'Doors opened', { role: 'style' }]]
                         for (var i = 0; i < data.length; i++) {
                             dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count), 'black'])
                         }
@@ -152,6 +153,8 @@ angular
                                 position: 'none'
                             },
                             hAxis: {
+                            	maxValue: new Date(response.till),
+                            	minValue: new Date(response.from),
                                 gridlines: {
                                     count: 7,
                                 },

@@ -16,6 +16,7 @@ import pa.domain.AccessLog;
 import pa.domain.UserAccount;
 import pa.rest.data.AccessLogCount;
 import pa.rest.data.AuthenticateTagResult;
+import pa.rest.data.EventLogResult;
 import pa.rest.data.Finances;
 import pa.services.AccessLogService;
 import pa.services.AdminService;
@@ -54,10 +55,18 @@ public class PaController {
 	}
 
 	@RequestMapping("/stats/hourlyLogs")
-	public List<AccessLogCount> getHourlyLogs() {
+	public EventLogResult getHourlyLogs() {
 		DateTime till = DateTime.now();
-		return logService.getEventCount(till.minusWeeks(1).toDate(), till.toDate(), "door 0", AccessLogService.LOG_INTERVAL.HOUR);
-		//return logService.getHourlyLogs(till.minusWeeks(1).toDate(), till.toDate());
+		DateTime from = till.minusWeeks(4);
+		
+		EventLogResult result = new EventLogResult();
+		//result.setEvents(logService.getEventCount(from.toDate(), till.toDate(), "door 0", AccessLogService.LOG_INTERVAL.HOUR));
+		result.setEvents(new ArrayList<AccessLogCount>());
+		result.setFrom(from.toDate());
+		result.setTill(till.toDate());
+		result.setEventName("door 0");
+
+		return result;
 	}
 
 	@RequestMapping("/stats/dailyLogs")
