@@ -15,6 +15,10 @@ buildscript {
 
 apply plugin: "com.moowork.node"
 
+node {
+	download = true
+}
+
 task buildClient(type: NpmTask) {
   npmCommand = ['run']
   args = ['build']
