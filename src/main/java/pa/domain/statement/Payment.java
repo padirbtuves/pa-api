@@ -3,6 +3,7 @@ package pa.domain.statement;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -12,32 +13,66 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.eclipse.persistence.oxm.annotations.XmlPath;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @XmlAccessorType(XmlAccessType.FIELD)
+@JsonIgnoreProperties({ "id", "new" })
 public class Payment extends AbstractPersistable<Long> {
+
+	public Integer getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(Integer transactionId) {
+		this.transactionId = transactionId;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
 
 	private static final long serialVersionUID = 8312764342778073073L;
 
-	@XmlElement(name="Amt")
+	@XmlPath("s:NtryDtls/s:TxDtls/s:Refs/s:TxId/text()")
+	@Column(unique = true)
+	@JsonIgnore
+	private Integer transactionId;
+
+	@XmlElement(name = "CdtDbtInd")
+	private String direction;
+
+	@XmlElement(name = "Amt")
 	private Double amount;
-		
-	@XmlPath("NtryDtls/TxDtls/RltdPties/DbtrAcct/Id/IBAN/text()")
+
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:DbtrAcct/s:Id/s:IBAN/text()")
+	@JsonIgnore
 	private String debitAccount;
-	
-	@XmlPath("NtryDtls/TxDtls/RltdPties/CdtrAcct/Id/IBAN/text()")
+
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:CdtrAcct/s:Id/s:IBAN/text()")
+	@JsonIgnore
 	private String creditAccount;
-	
-	@XmlPath("NtryDtls/TxDtls/RltdPties/Dbtr/Nm/text()")
+
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:Dbtr/s:Nm/text()")
+	@JsonIgnore
 	private String debitor;
-	
-	@XmlPath("NtryDtls/TxDtls/RltdPties/Cdtr/Nm/text()")
+
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RltdPties/s:Cdtr/s:Nm/text()")
+	@JsonIgnore
 	private String creditor;
-	
-	@XmlPath("NtryDtls/TxDtls/RmtInf/Ustrd/text()")
+
+	@XmlPath("s:NtryDtls/s:TxDtls/s:RmtInf/s:Ustrd/text()")
 	private String description;
-	
-	@XmlPath("BookgDt/Dt/text()")
+
+	@XmlPath("s:BookgDt/s:Dt/text()")
 	@XmlJavaTypeAdapter(DateAdapter.class)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
 	private Date date;
 
 	public Double getAmount() {
@@ -95,6 +130,5 @@ public class Payment extends AbstractPersistable<Long> {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
+
 }

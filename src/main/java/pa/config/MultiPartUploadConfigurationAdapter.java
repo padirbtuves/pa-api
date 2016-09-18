@@ -9,6 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Order(1)
 public class MultiPartUploadConfigurationAdapter extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
-		http.antMatcher("/trololo").csrf().disable().httpBasic();
+		http.antMatcher("/admin/upload/statement").csrf().disable();
 	}
 }

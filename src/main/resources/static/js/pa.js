@@ -60,6 +60,17 @@ angular
                                 config) {
                                 alert("error");
                             });
+                    },
+                    getFinanceLogs: function (callback) {
+                        $http.get('/stats/finances').success(
+                            function (data, status, header,
+                                config) {
+                                callback(data);
+                            }).error(
+                            function (data, status, header,
+                                config) {
+                                alert("error");
+                            });
                     }
                 }
       }])
@@ -117,13 +128,15 @@ angular
                 function drawAnnotations() {
                 	loadHourlyLog();
                 	loadDailyLog();
+                	loadFinanceLog();
                 }
                 
                 function loadHourlyLog() {
-                    AccessService.getHourlyLogs(function (data) {
-                        var dataArray = [['Date', 'Visits', { role: 'style' }]];
+                    AccessService.getHourlyLogs(function (response) {
+                    	var data = response.events
+                        var dataArray = [['Date', 'Doors opened', { role: 'style' }]]
                         for (var i = 0; i < data.length; i++) {
-                            dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count), 'blackR'])
+                            dataArray.push([new Date(data[i].dateTime), parseInt(data[i].count), 'black'])
                         }
 
                         var data = google.visualization
@@ -140,6 +153,8 @@ angular
                                 position: 'none'
                             },
                             hAxis: {
+                            	maxValue: new Date(response.till),
+                            	minValue: new Date(response.from),
                                 gridlines: {
                                     count: 7,
                                 },
@@ -203,4 +218,58 @@ angular
                     })
                 }
 
+                function loadFinanceLog() {
+                    AccessService.getFinanceLogs(function (finances) {
+                    	data = finances.payments;
+                    	var total = finances.initialAmount;
+                        var dataArray = [['Date', 'Transaction', 'Total']];
+                        for (var i = 0; i < data.length; i++) {
+                        	var amount = parseFloat(data[i].amount);
+                        	if (data[i].direction == 'DBIT') {
+                        		amount = -amount;
+                        	}
+                        	total += amount;
+                            dataArray.push([new Date(data[i].date), amount, total])
+                        }
+
+                        var data = google.visualization
+                            .arrayToDataTable(dataArray);
+
+                        var options = {
+                            chartArea: {
+                                left : 0,
+                                right : 0,
+                                top : 0,
+                                //bottom : 30
+                            },
+                            legend: {
+                                position: 'none'
+                            },
+                            hAxis: {
+                                gridlines: {
+                                    count: 6,
+                                },
+                                minorGridlines: {
+                                    count: 3,
+                                    color: '#f5f5f5' 
+
+                                },
+                                format: 'MMM'
+                            },
+                            vAxis:{
+                            	textPosition: 'none'
+                            },
+                            seriesType: 'bars',
+                            series: {
+                            	1: {
+                            		type: 'line'
+                            	}
+                            }
+                        };
+
+                        var chart = new google.visualization.ComboChart(
+                            document.getElementById('financeLog'));
+                        chart.draw(data, options);
+                    })
+                }
       }]);

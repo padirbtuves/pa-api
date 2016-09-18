@@ -15,12 +15,10 @@ package pa.controlers;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,65 +26,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import pa.domain.statement.Payment;
 import pa.domain.statement.Statement;
 import pa.domain.statement.StatementDocument;
+import pa.services.AdminService;
 
 @Controller
-@RequestMapping("/")
-public class AppController {
+@RequestMapping("/admin")
+public class AdminController {
 
-	@RequestMapping
-	public String home(HttpServletRequest request, OAuth2Authentication auth) {
-		if (request.isUserInRole("ROLE_USER")) {
-			return "redirect:/user";
-		} else {
-			return "home";
-		}
-	}
-
-	@RequestMapping(path = "stats")
-	public String log(HttpServletRequest request) {
-		return "stats";
-	}
-	
-	@RequestMapping(path = "finances")
-	public String finances(HttpServletRequest request) {
-		return "finances";
-	}
-	
 	@Autowired
 	private Unmarshaller unmarshaller;
-
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/up")
-	public String provideUploadInfo() throws IOException {
-		return "upload";
+	@Autowired
+	private AdminService adminService;
+	
+	@RequestMapping
+	public String home() throws IOException {
+		return "admin/home";
 	}
 	
-	@RequestMapping(method = RequestMethod.POST, value = "/trololo")
-	public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-
+	@RequestMapping(method = RequestMethod.POST, value = "/upload/statement")
+	public String handleStatementUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		if (!file.isEmpty()) {
 			try {
 				StatementDocument document = (StatementDocument) unmarshaller.unmarshal(file.getInputStream());
 			    Statement statemetn = document.getStatementRoot().getStatement();
 				
-				for (Payment payment : statemetn.getPayments()) {
-					System.out.println(payment.getDebitAccount() + " " + payment.getCreditAccount());
-				}
-
-			} catch (IOException | RuntimeException e) {
-				redirectAttributes.addFlashAttribute("message",
-						"Failued to upload " + file.getOriginalFilename() + " => " + e.getMessage());
-			} catch (JAXBException e) {
-				e.printStackTrace();
+			    adminService.storePaymentData(statemetn.getPayments());
+			} catch (JAXBException | IOException | RuntimeException e) {
+				redirectAttributes.addFlashAttribute("message", "Failued to upload " + file.getOriginalFilename() + " => " + e.getMessage());
 			}
 		} else {
-			redirectAttributes.addFlashAttribute("message",
-					"Failed to upload " + file.getOriginalFilename() + " because it was empty");
+			redirectAttributes.addFlashAttribute("message", "Failed to upload " + file.getOriginalFilename() + " because it was empty");
 		}
 
-		return "upload";
+		return "redirect:/admin";
 	}
 }
