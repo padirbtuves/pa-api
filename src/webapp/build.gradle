@@ -19,3 +19,5 @@ task buildClient(type: NpmTask) {
   npmCommand = ['run']
   args = ['build']
 }
+
+buildClient.dependsOn npmInstall
