@@ -6,4 +6,3 @@ export GRADLE_HOME=$OPENSHIFT_DATA_DIR/gradle-2.4
 export PATH=$GRADLE_HOME/bin:$PATH
 
 mvn package -s .openshift/settings.xml -DskipTests=true
-gradle bootRepackage
