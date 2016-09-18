@@ -20,11 +20,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().antMatchers("/webjars/**").permitAll();
+
 	    http
 	      .logout().logoutSuccessUrl("/").and()
 	      .antMatcher("/**")
 	      .authorizeRequests()
-	        .antMatchers("/", "/up", "/login**", "/webjars/**", "/auth/nfc", "/auth/log", "/auth/logs", "/stats/**")
+	        .antMatchers("/", "/up", "/login**", "/auth/nfc", "/auth/log", "/auth/logs", "/stats/**", "/finances")
 	        .permitAll()
 	      .anyRequest()
 	        .authenticated().and()

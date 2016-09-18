@@ -6,3 +6,8 @@ bin
 .settings
 .DS_Store
 /target/
+node_modules
+typings
+dist
+/src/main/resources/generated
+npm-debug.log
