@@ -3,6 +3,7 @@ package pa.controlers;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -32,16 +33,26 @@ public class WebhooksController {
 
 	@Autowired
 	private LockService lockService;
+	
+	@Value("${twilio.account.sid}")
+	private String accountSid;
 
-	@PostMapping(path = "twillio", produces = { "application/xml", "text/xml" })
-	public ResponseEntity<String> twillioIncommingCall(@RequestParam(name = "From", required = true) String from) {
-		LOG.info("Incomming call from " + from);
+	@PostMapping(path = "twilio", produces = { "application/xml", "text/xml" })
+	public ResponseEntity<String> twilioIncommingCall(@RequestParam(name = "From", required = true) String from, @RequestParam(name = "AccountSid", required = true) String sid) {
 		Reason reason = Reason.REJECTED;
-		UserAccount userAccount = userService.getUserAccount(from);
-		if (userAccount != null && userAccount.isValid()) {
-			lockService.unlock();
-			reason = Reason.BUSY;
+		
+		LOG.info("Incomming account SID " + sid);
+		LOG.info("Incomming call from " + from);
+		if (accountSid.equals(sid)) {
+			UserAccount userAccount = userService.getUserAccount(from);
+			if (userAccount != null && userAccount.isValid()) {
+				lockService.unlock();
+				reason = Reason.BUSY;
+			}
+		} else {
+			LOG.warning("Incorrect account SID");
 		}
+		
 		LOG.info("Sending response with reason " + reason);
 
 		Reject reject = new Reject.Builder().reason(reason).build();
