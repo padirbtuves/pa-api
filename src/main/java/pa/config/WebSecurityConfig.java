@@ -20,24 +20,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		http.exceptionHandling().authenticationEntryPoint(new AlwaysSendUnauthorized401AuthenticationEntryPoint());
+
         http.authorizeRequests().antMatchers("/webjars/**").permitAll();
 
 	    http
+	      .formLogin().defaultSuccessUrl("/asdasd")
+	      .and()
 	      .logout().logoutSuccessUrl("/").and()
 	      .antMatcher("/**")
 	      .authorizeRequests()
 	        .antMatchers("/", "/event", "/up", "/login**", "/auth/nfc", "/auth/log", "/auth/logs", "/stats/**", "/finances")
 	        .permitAll()
 	      .anyRequest()
-	        .authenticated().and()
-	        .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf().csrfTokenRepository(csrfTokenRepository());
+	        .authenticated().and().csrf().disable();
+	        //.addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class).csrf().csrfTokenRepository(csrfTokenRepository());
 	}
 
-	@Bean
-	@ConfigurationProperties("security.csrf.tokenRepository")
-	protected CsrfTokenRepository csrfTokenRepository() {
-		return new HttpSessionCsrfTokenRepository();
-	}
+//	@Bean
+//	@ConfigurationProperties("security.csrf.tokenRepository")
+//	protected CsrfTokenRepository csrfTokenRepository() {
+//		return new HttpSessionCsrfTokenRepository();
+//	}
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
