@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	      .logout().logoutSuccessUrl("/").and()
 	      .antMatcher("/**")
 	      .authorizeRequests()
-	        .antMatchers("/", "/event", "/up", "/login**", "/auth/nfc", "/auth/log", "/auth/logs", "/stats/**", "/finances")
+	        .antMatchers("/", "/event", "/up", "/login**", "/auth/nfc", "/auth/log", "/auth/logs", "/stats/**", "/finances", "/hook/**")
 	        .permitAll()
 	      .anyRequest()
 	        .authenticated().and().csrf().disable();

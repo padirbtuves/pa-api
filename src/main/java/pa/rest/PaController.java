@@ -83,7 +83,7 @@ public class PaController {
 
 		return result;
 	}
-
+	
 	@RequestMapping("/auth/nfc")
 	public AuthenticateTagResult authentcateTag(@RequestParam(name = "id") String tagId) {
 		UserAccount userAccount = userService.getUserAccount(tagId);

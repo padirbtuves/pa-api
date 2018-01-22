@@ -46,7 +46,8 @@ dependencies {
 	
 	compile "org.eclipse.persistence:org.eclipse.persistence.moxy:2.6.3"
 	compile "org.springframework.boot:spring-boot-devtools"
-
+	compile group: "com.twilio.sdk", name: "twilio", version: "7.17.+"
+	
 	testCompile "org.springframework.boot:spring-boot-starter-test"
 }
 
